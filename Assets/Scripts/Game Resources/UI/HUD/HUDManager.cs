@@ -14,12 +14,16 @@ namespace WitchDoctor.GameResources.UI.HUD
         {
             base.InitializeManager();
             GameConstants.OnPlayerHealthSet += SetPlayerHealth;
+            GameConstants.OnPlayerManaSet += SetPlayerMana;
         }
 
         protected override void DeInitializeManager()
         {
             if (!AppHandler.Instance.ApplicationQuitting)
+            {
+                GameConstants.OnPlayerManaSet += SetPlayerMana;
                 GameConstants.OnPlayerHealthSet -= SetPlayerHealth;
+            }
 
             base.DeInitializeManager();
         }
@@ -45,9 +49,9 @@ namespace WitchDoctor.GameResources.UI.HUD
             view.HealthSlider.SetValueWithoutNotify(sliderValClamp);
         }
 
-        public void SetPlayerMana(int mana)
+        public void SetPlayerMana(float mana)
         {
-            var sliderValClamp = (float) Mathf.Clamp(mana, 0, 100) / GameConstants.PLAYER_MAX_HEALTH;
+            var sliderValClamp = Mathf.Clamp(mana, 0, GameConstants.PLAYER_MAX_MANA) / GameConstants.PLAYER_MAX_MANA;
 
             view.ManaSlider.SetValueWithoutNotify(sliderValClamp);
         }

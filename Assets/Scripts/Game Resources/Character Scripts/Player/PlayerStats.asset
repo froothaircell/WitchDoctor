@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 472ed017c5aa9ed47b50f638f7efe840, type: 3}
   m_Name: PlayerStats
   m_EditorClassIdentifier: 
-  BaseHealth: 200
   BaseAttackDamage: 20
   WalkSpeed: 15
   JumpSpeed: 45
@@ -42,7 +41,9 @@ MonoBehaviour:
   BaseChargedAttackFactor: 1.5
   AttackResetDuration: 0.1
   PrimaryAttackChargeDelay: 0.15
-  PrimaryAttackChargeTime: 0.85
+  MeleeAttackManaReq: 20
+  ManaConsumptionRate_ChargedMelee: 50
+  ManaRefreshRate: 20
   Attack1HitboxRadius: 2.48
   Attack2HitboxRadius: 3.6
   Attack3HitboxRadius: 4.12

@@ -15,6 +15,7 @@ namespace WitchDoctor.GameResources
         #region Events
         public static Action OnAppQuit;
         public static Action<int> OnPlayerHealthSet;
+        public static Action<float> OnPlayerManaSet;
         public static Action<AsyncOperation> OnLevelLoadStart;
         #endregion
 
@@ -22,6 +23,7 @@ namespace WitchDoctor.GameResources
         {
             OnAppQuit = null;
             OnPlayerHealthSet = null;
+            OnPlayerManaSet = null;
             OnLevelLoadStart = null;
         }
     }

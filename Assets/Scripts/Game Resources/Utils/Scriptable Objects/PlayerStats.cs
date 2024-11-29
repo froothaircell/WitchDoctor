@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 namespace WitchDoctor.GameResources.Utils.ScriptableObjects
 {
@@ -63,8 +64,12 @@ namespace WitchDoctor.GameResources.Utils.ScriptableObjects
         public float AttackResetDuration = 0.3f;
         [Tooltip("A delay period after which the charge begins. Used to ensure that the charge does not begin for tapping interactions")]
         public float PrimaryAttackChargeDelay = 0.1f;
-        [Tooltip("Time it takes for primary attack to charge")]
-        public float PrimaryAttackChargeTime = 0.85f;
+        //[Tooltip("Time it takes for primary attack to charge")]
+        //public float PrimaryAttackChargeTime = 0.85f;
+        public float MeleeAttackManaReq = 20f;
+        // Instead of using a timer or a value for how much mana we should expend, we use consumption rate
+        public float ManaConsumptionRate_ChargedMelee = 1f;
+        public float ManaRefreshRate = 1f; // Number of mana points refilled per frame
         public float Attack1HitboxRadius = 1f;
         public float Attack2HitboxRadius = 1f;
         public float Attack3HitboxRadius = 1f;

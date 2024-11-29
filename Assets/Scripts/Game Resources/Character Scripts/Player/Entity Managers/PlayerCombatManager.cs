@@ -19,6 +19,9 @@ namespace WitchDoctor.GameResources.CharacterScripts.Player.EntityManagers
     public class PlayerCombatManager : GameEntityManager<PlayerCombatManager, PlayerCombatManagerContext>
     {
         #region Private Properties
+        private float _currMana = 0;
+        private const float _maxMana = GameConstants.PLAYER_MAX_MANA;
+
         private PrimaryAttackType _currAttack = PrimaryAttackType.None;
 
         private PlayerStates _playerStates;
@@ -56,10 +59,21 @@ namespace WitchDoctor.GameResources.CharacterScripts.Player.EntityManagers
             _primaryAttack3Hitbox, 
             _primaryChargedAttackHitbox;
 
+        public float CurrMana {
+            get
+            {
+                _currMana = _currMana > _maxMana ? _maxMana : _currMana;
+                return _currMana;
+            }
+        }
+
         #region Overrides
         public override void InitManager()
         {
             base.InitManager();
+
+            _currMana = GameConstants.PLAYER_MAX_MANA;
+            GameConstants.OnPlayerManaSet?.Invoke(CurrMana);
 
             _playerStates = InitializationContext.PlayerStates;
             _baseStats = InitializationContext.BaseStats;
@@ -163,9 +177,14 @@ namespace WitchDoctor.GameResources.CharacterScripts.Player.EntityManagers
             }
 
             _currAttack = value;
+
+            if (value != PrimaryAttackType.ChargedAttack && value != PrimaryAttackType.None)
+            {
+                ExpendMana(_baseStats.MeleeAttackManaReq);
+            }
         }
 
-        private void SetCharging(bool updateAnimation = true)
+        private void SetChargingStatus(bool updateAnimation = true)
         {
             var value = _primaryAttackChargeStarted ^ _primaryAttackCharged;
 
@@ -177,6 +196,11 @@ namespace WitchDoctor.GameResources.CharacterScripts.Player.EntityManagers
             }
 
             _playerStates.chargingAttack = value;
+            if (_playerStates.chargingAttack)
+            {
+                if (!ExpendMana(_baseStats.ManaConsumptionRate_ChargedMelee * Time.deltaTime))
+                    CancelCharge();
+            }
         }
 
         #region Combat Scripts
@@ -197,8 +221,29 @@ namespace WitchDoctor.GameResources.CharacterScripts.Player.EntityManagers
                     _chargeInitTime = Time.time;
                     _currChargeTime = 0f;
 
-                    SetCharging();
+                    SetChargingStatus();
                 }
+            }
+        }
+
+        private bool ExpendMana(float mana)
+        {
+            if (mana > _currMana) return false;
+
+            _currMana = Mathf.Clamp(_currMana - mana, 0, _maxMana);
+            GameConstants.OnPlayerManaSet?.Invoke(CurrMana);
+
+            return true;
+        }
+
+        private void ReplenishMana()
+        {
+            if (!_playerStates.chargingAttack && _currMana < _maxMana)
+            {
+                _currMana += Mathf.Clamp(_baseStats.ManaRefreshRate * Time.deltaTime, 
+                    0, GameConstants.PLAYER_MAX_MANA);
+
+                GameConstants.OnPlayerManaSet?.Invoke(CurrMana);
             }
         }
 
@@ -219,7 +264,7 @@ namespace WitchDoctor.GameResources.CharacterScripts.Player.EntityManagers
                 SetCurrentAttack(PrimaryAttackType.ChargedAttack);
                 _primaryAttackCharged = false;
 
-                SetCharging();
+                SetChargingStatus();
             }
             else
             {
@@ -234,7 +279,7 @@ namespace WitchDoctor.GameResources.CharacterScripts.Player.EntityManagers
         private void ChargeAttack()
         {
             _currChargeTime = Time.time - _chargeInitTime;
-            SetCharging();
+            SetChargingStatus();
         }
 
         private IEnumerator AttackChain_Coroutine()
@@ -252,7 +297,7 @@ namespace WitchDoctor.GameResources.CharacterScripts.Player.EntityManagers
         #region Event Listeners
         private void PrimaryAttack_started(InputAction.CallbackContext obj)
         {
-            if (_blockInput) return;
+            if (_blockInput || _currMana < _baseStats.MeleeAttackManaReq) return;
 
             if (obj.started && _playerStates.CanAttack && _playerMovementManager.IsGrounded) // We'll change the is grounded flag later if required
             {
@@ -263,13 +308,13 @@ namespace WitchDoctor.GameResources.CharacterScripts.Player.EntityManagers
                 _primaryAttackCharged = false;
                 _primaryAttackInputTime = Time.time;
 
-                SetCharging(false);
+                SetChargingStatus(false);
             }
         }
 
         private void PrimaryAttack_canceled(InputAction.CallbackContext obj)
         {
-            if (_blockInput) return;
+            if (_blockInput || _currMana < _baseStats.MeleeAttackManaReq) return;
 
             if (obj.canceled && !_primaryAttackInputStarted && _playerMovementManager.IsGrounded)
             {
@@ -277,7 +322,7 @@ namespace WitchDoctor.GameResources.CharacterScripts.Player.EntityManagers
                 _primaryAttackInputStarted = true;
                 _primaryAttackChargeStarted = false;
 
-                SetCharging();
+                SetChargingStatus();
             }
         }
 
@@ -285,7 +330,7 @@ namespace WitchDoctor.GameResources.CharacterScripts.Player.EntityManagers
         {
             if (_blockInput) return;
 
-            throw new System.NotImplementedException();
+            // throw new System.NotImplementedException();
         }
 
         private void OnApplyHitBox_Event(PrimaryAttackType attackType)
@@ -333,7 +378,7 @@ namespace WitchDoctor.GameResources.CharacterScripts.Player.EntityManagers
             _playerStates.attacking = false;
             _primaryAttackCharged = false;
 
-            SetCharging();
+            SetChargingStatus();
 
             _attackChainCoroutine = StartCoroutine(AttackChain_Coroutine());
         }
@@ -357,12 +402,24 @@ namespace WitchDoctor.GameResources.CharacterScripts.Player.EntityManagers
 
             _chargeFXAnimator.gameObject.SetActive(false);
         }
+
+        private void CancelCharge()
+        {
+            _primaryAttackChargeStarted = false;
+            _primaryAttackCharged = false;
+            // _playerStates.chargingAttack = false;
+
+            _chargeFXAnimator.gameObject.SetActive(false);
+            SetChargingStatus();
+            _primaryAttackInputStarted = true; // Force the attack to be executed here
+        }
         #endregion
 
         #region Unity Methods
         private void Update()
         {
             UpdateCombatStates();
+            ReplenishMana();
         }
 
 #if UNITY_EDITOR

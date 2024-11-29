@@ -1,11 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Build.Content;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using WitchDoctor.CoreResources.StateMachine;
 using WitchDoctor.CoreResources.UIViews.BaseScripts;
-using WitchDoctor.Utils;
 
 namespace WitchDoctor.GameResources.StateMachine
 {

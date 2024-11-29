@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e907d9eb8639474f955f41555653b95, type: 3}
   m_Name: Ground Amalgam Stats
   m_EditorClassIdentifier: 
-  BaseHealth: 100
+  BaseHealth: 50
   BaseAttackDamage: 5
   ContactDamage: 10
   MovementSpeed: 4.8
