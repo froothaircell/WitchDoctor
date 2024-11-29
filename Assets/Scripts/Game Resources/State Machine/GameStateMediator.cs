@@ -73,7 +73,20 @@ public class GameStateMediator : DestroyableMonoSingleton<GameStateMediator>
             _fsm.GoToState<GameState_Level1>();
     }
 
-
+    public void QuitGame()
+    {
+        if (CurrentState.GetType().Equals(typeof(GameState_Menu)))
+        {
+            AppHandler.Instance.QuitGame();
+        }
+        else if (CurrentState.GetType().Equals(typeof(GameState_Level1)))
+        {
+            if (CurrentState.PrevState.GetType().Equals(typeof(GameState_Menu)))
+                _fsm.GoToPreviousState();
+            else
+                _fsm.GoToStateNonHistorically<GameState_Menu>();
+        }
+    }
     #endregion
 
     #region Private Methods

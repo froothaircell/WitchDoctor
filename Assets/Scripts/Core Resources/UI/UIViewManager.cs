@@ -11,7 +11,6 @@ namespace WitchDoctor.CoreResources.UIViews.BaseScripts
         Loading,
         Settings,
         HUDMenu,
-        Chat,
     }
 
 

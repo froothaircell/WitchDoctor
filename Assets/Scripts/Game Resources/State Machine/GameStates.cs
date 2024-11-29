@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Build.Content;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using WitchDoctor.CoreResources.StateMachine;
@@ -33,16 +34,13 @@ namespace WitchDoctor.GameResources.StateMachine
             base.OnEnter();
 
             SceneManager.LoadScene(1);
-            UIMediator.Instance.SetMenuVisibility(UIViewType.MainMenu, true);
+
+            var toggleMenus = !(PrevState != null && PrevState.GetType().Equals(typeof(GameState_Level1)));
+            UIMediator.Instance.SetMenuVisibility(UIViewType.MainMenu, true, toggleMenus);
         }
 
         public override void OnExit()
         {
-            if (NextState.GetType() == typeof(GameState_Level1))
-            {
-                UIMediator.Instance.SetMenuVisibility(UIViewType.HUDMenu, true);
-            }
-
             base.OnExit();
         }
     }
@@ -60,15 +58,22 @@ namespace WitchDoctor.GameResources.StateMachine
             else
                 sceneLoadingOp = SceneManager.LoadSceneAsync(3);
 
+            UIMediator.Instance.SetMenuVisibility(UIViewType.HUDMenu, true);
             GameConstants.OnLevelLoadStart?.Invoke(sceneLoadingOp);
         }
 
         public override void OnExit()
         {
-            if (NextState.GetType().Equals(typeof(GameState_Menu)))
-            {
-                UIMediator.Instance.SetMenuVisibility(UIViewType.MainMenu, true);
-            }
+            UIMediator.Instance.SetMenuVisibility(UIViewType.HUDMenu, false);
+
+            AsyncOperation sceneLoadingOp;
+
+            if (AppHandler.Instance.LoadTestLevel)
+                sceneLoadingOp = SceneManager.UnloadSceneAsync(2);
+            else
+                sceneLoadingOp = SceneManager.UnloadSceneAsync(3);
+
+            // GameConstants.OnLevelLoadStart?.Invoke(sceneLoadingOp);
 
             base.OnExit();
         }

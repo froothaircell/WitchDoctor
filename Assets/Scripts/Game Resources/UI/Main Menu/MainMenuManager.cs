@@ -48,6 +48,7 @@ namespace WitchDoctor.GameResources.UI.MainMenu
         private void OnQuit()
         {
             //  On Quit
+            GameStateMediator.Instance.QuitGame();
         }
         #endregion
     }

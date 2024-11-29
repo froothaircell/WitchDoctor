@@ -14,6 +14,7 @@ namespace WitchDoctor.GameResources
         private bool _loadTestLevel = false;
 
         public bool ApplicationQuitting { get; private set; }
+        public bool ApplicationFrozen { get; private set; }
 
         public bool LoadTestLevel => _loadTestLevel;
 
@@ -40,9 +41,16 @@ namespace WitchDoctor.GameResources
         #region Public Methods
         public void QuitGame()
         {
-            _mediator.enabled = false;
+            Debug.Log("Quitting Game");
+            _mediator.gameObject.SetActive(false);
 
             Application.Quit();
+        }
+
+        public void FreezeApplication(bool status)
+        {
+            ApplicationFrozen = status;
+            Time.timeScale = status ? 0 : 1;
         }
         #endregion
     }

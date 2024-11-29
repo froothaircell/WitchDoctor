@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -71,6 +72,50 @@ public class UIMediator : DestroyableMonoSingleton<UIMediator>
         }
         else
             Debug.LogError("Manager doesn't exist");
+    }
+
+    public void ToggleMenuVisibility(UIViewType viewType, bool toggleMenus = true)
+    {
+        if (toggleMenus)
+        {
+            foreach (var mng in _viewManagers.Values)
+            {
+                mng.HidePanel();
+            }
+        }
+
+        if (_viewManagers.TryGetValue(viewType, out var manager))
+        {
+            if (!manager.IsEnabled)
+                manager.ShowPanel();
+            else
+                manager.HidePanel();
+        }
+        else
+            Debug.LogError("Manager doesn't exist");
+    }
+
+    public void SetMenuInteractability(UIViewType viewType, bool status, bool ignoreParentGroups = false)
+    {
+        if (_viewManagers.TryGetValue(viewType, out var manager))
+        {
+            manager.SetMenuInteractability(status, ignoreParentGroups);
+            return;
+        }
+
+        throw new NullReferenceException($"Menu of type {viewType} not found!");
+    }
+
+
+
+    public bool CheckMenuVisibility(UIViewType viewType)
+    {
+        if (_viewManagers.TryGetValue(viewType, out var manager))
+        {
+            return manager.IsEnabled && manager.IsInitialized;
+        }
+
+        throw new NullReferenceException($"Menu of type {viewType} not found!");
     }
 
     public void ResetMenus()
