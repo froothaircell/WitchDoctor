@@ -217,6 +217,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccfcd0987d9d50740a5bb51e607c8d6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _currentCamera: {fileID: 0}
   _allVirtualCameras: []
   _cameraResetPanTime: 1.5
   _fallPanAmount: 0.25

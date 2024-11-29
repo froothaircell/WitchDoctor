@@ -52,7 +52,7 @@ public class UIMediator : DestroyableMonoSingleton<UIMediator>
     #endregion
 
     #region Public Methods
-    public void ShowMenu(UIViewType viewType, bool toggleMenus = true)
+    public void SetMenuVisibility(UIViewType viewType, bool status, bool toggleMenus = true)
     {
         if (toggleMenus)
         {
@@ -64,7 +64,10 @@ public class UIMediator : DestroyableMonoSingleton<UIMediator>
 
         if (_viewManagers.TryGetValue(viewType, out var manager))
         {
-            manager.ShowPanel();
+            if (status)
+                manager.ShowPanel();
+            else 
+                manager.HidePanel();
         }
         else
             Debug.LogError("Manager doesn't exist");

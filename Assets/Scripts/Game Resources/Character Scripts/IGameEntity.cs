@@ -155,6 +155,9 @@ namespace WitchDoctor.GameResources.CharacterScripts
             _isPlayer = true;
             _currHealth = _maxHealth; // set max health in override
             _contactDamage = 0;
+
+
+            GameConstants.OnPlayerHealthSet?.Invoke(CurrHealth);
         }
 
         protected override void DeInitCharacter()

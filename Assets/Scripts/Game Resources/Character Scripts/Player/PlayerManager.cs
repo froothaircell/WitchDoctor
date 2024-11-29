@@ -89,10 +89,11 @@ namespace WitchDoctor.GameResources.CharacterScripts.Player
             // Handling this for respawn purposes
             _animator.SetBool("Death", _playerStates.dead);
 
-            _maxHealth = _baseStats.BaseHealth;
+            _maxHealth = GameConstants.PLAYER_MAX_HEALTH;
             _primaryAttackDamage = _baseStats.BasePrimaryAttackDamage;
             _secondaryAttackDamage = _baseStats.BaseSecondaryAttackDamage;
             _chargedAttackFactor = _baseStats.BaseChargedAttackFactor;
+
 
             base.InitCharacter();
         }
@@ -108,10 +109,11 @@ namespace WitchDoctor.GameResources.CharacterScripts.Player
 
         protected override void OnDamageTaken(int damage, Transform attacker)
         {
-            Debug.Log($"Damage Taken: {damage}\nCurrent Health: {_currHealth}");
             if (!_playerStates.dead) _playerMovementManager.ProcessEnemyCollision(attacker);
 
             base.OnDamageTaken(damage, attacker);
+            GameConstants.OnPlayerHealthSet?.Invoke(CurrHealth);
+            Debug.Log($"Damage Taken: {damage}\nCurrent Health: {_currHealth}");
         }
 
         protected override void OnDeath()
@@ -133,7 +135,6 @@ namespace WitchDoctor.GameResources.CharacterScripts.Player
             if (_baseStats.PlayerDamagableLayers.Contains(collision.gameObject.layer))
             {
                 TakeDamage(10, collision.transform); // get contact damage from IGameEntity
-                
             }
         }
         #endregion

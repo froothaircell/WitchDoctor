@@ -177,10 +177,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Camera Manager
       objectReference: {fileID: 0}
-    - target: {fileID: 6719494725781686606, guid: 700363eda59fc794b8cfc9498cd81e0d, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -214,36 +210,20 @@ PrefabInstance:
       propertyPath: m_Name
       value: UIManager
       objectReference: {fileID: 0}
-    - target: {fileID: 207930725038328281, guid: a0b67f4007666f444b12da1a25a2b0d3, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3207685311021349020, guid: a0b67f4007666f444b12da1a25a2b0d3, type: 3}
-      propertyPath: m_VertexColorAlwaysGammaSpace
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5769264800011174709, guid: a0b67f4007666f444b12da1a25a2b0d3, type: 3}
+    - target: {fileID: 2225893644332507443, guid: a0b67f4007666f444b12da1a25a2b0d3, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5769264800011174709, guid: a0b67f4007666f444b12da1a25a2b0d3, type: 3}
+    - target: {fileID: 2225893644332507443, guid: a0b67f4007666f444b12da1a25a2b0d3, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5769264800011174709, guid: a0b67f4007666f444b12da1a25a2b0d3, type: 3}
-      propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5769264800011174709, guid: a0b67f4007666f444b12da1a25a2b0d3, type: 3}
-      propertyPath: m_AnchorMin.y
+    - target: {fileID: 5362947917150366496, guid: a0b67f4007666f444b12da1a25a2b0d3, type: 3}
+      propertyPath: m_AnchorMax.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5769264800011174709, guid: a0b67f4007666f444b12da1a25a2b0d3, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5769264800011174709, guid: a0b67f4007666f444b12da1a25a2b0d3, type: 3}
-      propertyPath: m_SizeDelta.y
+    - target: {fileID: 5362947917150366496, guid: a0b67f4007666f444b12da1a25a2b0d3, type: 3}
+      propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6394009132857761528, guid: a0b67f4007666f444b12da1a25a2b0d3, type: 3}
@@ -285,10 +265,6 @@ PrefabInstance:
     - target: {fileID: 6394009132857761528, guid: a0b67f4007666f444b12da1a25a2b0d3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7002490448553833616, guid: a0b67f4007666f444b12da1a25a2b0d3, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -362,10 +338,6 @@ PrefabInstance:
     - target: {fileID: 939561601948287890, guid: b5e7ce6de2a1a8048897e51980e5cc0a, type: 3}
       propertyPath: m_Name
       value: Input Manager
-      objectReference: {fileID: 0}
-    - target: {fileID: 939561601948287890, guid: b5e7ce6de2a1a8048897e51980e5cc0a, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -8,7 +8,7 @@ namespace WitchDoctor.GameResources.Utils.ScriptableObjects
     public class AmalgamStats : ScriptableObject
     {
         [Header("Base Stats")]
-        public int BaseHealth = 100;
+        public int BaseHealth = GameConstants.PLAYER_MAX_HEALTH;
         public int BaseAttackDamage = 15;
         public int ContactDamage = 10;
 

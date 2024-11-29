@@ -35,7 +35,7 @@ namespace WitchDoctor.CoreResources.Managers.CameraManagement
                 if (inspectorObjects.panCameraOnContact)
                 {
                     // Pan the camera based on the pan direction in the inspector
-                    CameraManager.Instance.PanCamera(inspectorObjects.panDistance, inspectorObjects.panTime, inspectorObjects.panDirection, false);
+                     CameraManager.Instance.PanCamera(inspectorObjects.panDistance, inspectorObjects.panTime, inspectorObjects.panDirection, false);
                 }
             }
         }

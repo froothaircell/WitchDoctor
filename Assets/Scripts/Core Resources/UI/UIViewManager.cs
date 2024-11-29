@@ -168,7 +168,7 @@ namespace WitchDoctor.CoreResources.UIViews.BaseScripts
 
         public override void HidePanel()
         {
-            if (IsEnabled)
+            if (IsEnabled && IsInitialized)
             {
                 /*if (!GameStateManager.ApplicationQuitting)
                 {

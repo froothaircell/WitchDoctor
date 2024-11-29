@@ -59,10 +59,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: State Machine Mediator
       objectReference: {fileID: 0}
-    - target: {fileID: 21511284390701572, guid: 9e75785cfb4c8c94798eb8ce0d0b7a3a, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2052818105451193447, guid: 9e75785cfb4c8c94798eb8ce0d0b7a3a, type: 3}
       propertyPath: m_LocalPosition.x
       value: -7.640622
@@ -101,18 +97,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2052818105451193447, guid: 9e75785cfb4c8c94798eb8ce0d0b7a3a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3588886163121204378, guid: 9e75785cfb4c8c94798eb8ce0d0b7a3a, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4075792505632574321, guid: 9e75785cfb4c8c94798eb8ce0d0b7a3a, type: 3}
-      propertyPath: m_fontSize
-      value: 41.95
-      objectReference: {fileID: 0}
-    - target: {fileID: 5909049135183827411, guid: 9e75785cfb4c8c94798eb8ce0d0b7a3a, type: 3}
-      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

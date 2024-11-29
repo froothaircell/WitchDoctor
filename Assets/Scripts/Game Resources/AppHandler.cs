@@ -13,6 +13,8 @@ namespace WitchDoctor.GameResources
         [SerializeField]
         private bool _loadTestLevel = false;
 
+        public bool ApplicationQuitting { get; private set; }
+
         public bool LoadTestLevel => _loadTestLevel;
 
         #region Overrides
@@ -21,13 +23,26 @@ namespace WitchDoctor.GameResources
             base.InitSingleton();
 
             _mediator.gameObject.SetActive(true);
+            GameConstants.OnAppQuit += QuitGame;
 
             Debug.Log("App Handler Initialized");
         }
 
         public override void CleanSingleton()
         {
+            if (!ApplicationQuitting)
+                GameConstants.OnAppQuit -= QuitGame;
+
             base.CleanSingleton();
+        }
+        #endregion
+
+        #region Public Methods
+        public void QuitGame()
+        {
+            _mediator.enabled = false;
+
+            Application.Quit();
         }
         #endregion
     }

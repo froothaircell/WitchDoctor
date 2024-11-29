@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using WitchDoctor.CoreResources.StateMachine;
 using WitchDoctor.CoreResources.UIViews.BaseScripts;
+using WitchDoctor.Utils;
 
 namespace WitchDoctor.GameResources.StateMachine
 {
@@ -32,14 +33,14 @@ namespace WitchDoctor.GameResources.StateMachine
             base.OnEnter();
 
             SceneManager.LoadScene(1);
-            UIMediator.Instance.ShowMenu(UIViewType.MainMenu);
+            UIMediator.Instance.SetMenuVisibility(UIViewType.MainMenu, true);
         }
 
         public override void OnExit()
         {
             if (NextState.GetType() == typeof(GameState_Level1))
             {
-                UIMediator.Instance.ShowMenu(UIViewType.HUDMenu);
+                UIMediator.Instance.SetMenuVisibility(UIViewType.HUDMenu, true);
             }
 
             base.OnExit();
@@ -52,17 +53,21 @@ namespace WitchDoctor.GameResources.StateMachine
         {
             base.OnEnter();
 
+            AsyncOperation sceneLoadingOp;
+
             if (AppHandler.Instance.LoadTestLevel)
-                SceneManager.LoadScene(2);
+                sceneLoadingOp = SceneManager.LoadSceneAsync(2);
             else
-                SceneManager.LoadScene(3);
+                sceneLoadingOp = SceneManager.LoadSceneAsync(3);
+
+            GameConstants.OnLevelLoadStart?.Invoke(sceneLoadingOp);
         }
 
         public override void OnExit()
         {
             if (NextState.GetType().Equals(typeof(GameState_Menu)))
             {
-                UIMediator.Instance.ShowMenu(UIViewType.MainMenu);
+                UIMediator.Instance.SetMenuVisibility(UIViewType.MainMenu, true);
             }
 
             base.OnExit();

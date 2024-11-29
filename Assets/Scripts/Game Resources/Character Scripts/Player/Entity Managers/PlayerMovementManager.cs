@@ -394,8 +394,6 @@ namespace WitchDoctor.GameResources.CharacterScripts.Player.EntityManagers
 
                 }
 
-                Debug.Log(finalVelocity.x);
-                Debug.Log(CharacterRenderFacingRight);
                 if ((finalVelocity.x < 0 && !CharacterRenderFacingRight) || (finalVelocity.x > 0 && CharacterRenderFacingRight))
                     Flip(true);
 
